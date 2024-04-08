@@ -1,9 +1,13 @@
 {
-  "TWITTER": "https://twitter.com/intent/tweet?hashtags=minecraftpaintings&text=I just used Minecraft painting creator to create an awesome custom resource pack full of paintings!&url=http%3A%2F%2Fmcpaintings.com%2F",
+  "TWITTER_COMPOSE": "https://twitter.com/intent/tweet?hashtags=minecraftpaintings&text=I just used Minecraft painting creator to create an awesome custom resource pack full of paintings!&url=http%3A%2F%2Fmcpaintings.com%2F",
   "GITHUB": "https://github.com/jthistle/mc-paintings/",
   "GITHUB_ISSUE": "https://github.com/jthistle/mc-paintings/issues/new",
   "FEEDBACK": "https://docs.google.com/forms/d/e/1FAIpQLScfjgvzPzw1OCbJVJ_gUwDDR1AxWtOQUZzxa2PeRw8BU-EhuA/viewform?usp=sf_link",
   "TWEET_AT": "https://twitter.com/intent/tweet?text=%40MCPaintingsSite%20&related=MCPaintingsSite",
-  "TWITTER_FOLLOW": "https://twitter.com/iAntent/follow?screen_name=MCPaintingsSite",
+  "TWITTER": "https://twitter.com/MCPaintingsSite",
+  "BLUESKY": "https://bsky.app/profile/mcpaintings.com",
+  "BLUESKY_AT": "https://bsky.app/profile/mcpaintings.com",
+  "__BLUESKY_AT": "https://bsky.app/intent/compose?text=%40mcpaintings.com",
+  "BLUESKY_COMPOSE": "https://bsky.app/intent/compose?text=I%20just%20used%20Minecraft%20painting%20creator%20to%20create%20an%20awesome%20custom%20resource%20pack%20full%20of%20paintings%21%20Try%20it%20yourself%20at%20mcpaintings.com%2F%20%23minecraftpaintings",
   "KOFI": "https://ko-fi.com/mcpaintings"
 }

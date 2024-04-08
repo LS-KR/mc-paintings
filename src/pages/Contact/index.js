@@ -21,8 +21,14 @@
 
 import React from 'react';
 import Layout, { Column } from '../../components/Layout';
-import { GITHUB_ISSUE, FEEDBACK, TWEET_AT } from '../../supportLinks.json';
+import {
+  GITHUB_ISSUE,
+  FEEDBACK,
+  TWEET_AT,
+  BLUESKY_AT,
+} from '../../supportLinks.json';
 import Button from '../../components/Button';
+import Link from '../../components/ExternalLink';
 
 function About(props) {
   return (
@@ -36,8 +42,8 @@ function About(props) {
             any of the three methods below:
           </p>
           <div className="buttons">
-            <Button external={TWEET_AT} scheme="tblue">
-              Talk to me on Twitter
+            <Button external={BLUESKY_AT} scheme="tblue">
+              Message via Bluesky
             </Button>
             <br />
             <Button external={FEEDBACK}>Leave feedback</Button>
@@ -45,6 +51,10 @@ function About(props) {
             <Button external={GITHUB_ISSUE} scheme="black">
               Open an issue on GitHub
             </Button>
+            <br />
+            <div className="space"></div>
+            (You can also{' '}
+            <Link external={TWEET_AT}>message us via X/Twitter</Link>.)
           </div>
           <br />
         </div>
@@ -77,6 +87,10 @@ function About(props) {
 
         .buttons {
           text-align: center;
+        }
+
+        .space {
+          margin-top: 2rem;
         }
       `}</style>
     </Layout>

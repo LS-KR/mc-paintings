@@ -20,8 +20,16 @@ import React from 'react';
 import InfoPopup from '../InfoPopup';
 import Button from '../Button';
 import SupportBtn from '../SupportBtn';
+import Link from '../ExternalLink';
 
-import { TWITTER, GITHUB, FEEDBACK, TWEET_AT } from '../../supportLinks.json';
+import {
+  TWITTER_COMPOSE,
+  GITHUB,
+  FEEDBACK,
+  BLUESKY_AT,
+  BLUESKY_COMPOSE,
+  TWITTER,
+} from '../../supportLinks.json';
 import ReactGA from '../../analytics';
 
 export default ({ onClose }) => {
@@ -37,17 +45,21 @@ export default ({ onClose }) => {
       <SupportBtn kofiHandler={kofiHandler} />
       <p>Found a problem? Just want to say hi?</p>
       <Button external={FEEDBACK}>Give some feedback</Button>
-      <Button external={TWEET_AT} scheme="tblue">
-        Tweet at me
+      <Button external={BLUESKY_AT} scheme="tblue">
+        Message via Bluesky
       </Button>
       <p>Other ways to support:</p>
-      <Button external={TWITTER} scheme="tblue">
-        Tweet about it
+      <Button external={BLUESKY_COMPOSE} scheme="tblue">
+        Bluesky about it
+      </Button>
+      <Button external={TWITTER_COMPOSE} scheme="xblack">
+        X about it
       </Button>
       <Button external={GITHUB} scheme="black">
         Star on GitHub
       </Button>
-
+      <div className="spacer"></div>
+      (You can also <Link external={TWITTER}>find us on X/Twitter</Link>.)
       <div className="break" />
       <style jsx>{`
         .highlight {

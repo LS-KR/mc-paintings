@@ -87,6 +87,14 @@ const ButtonInternals = ({
       primaryDisabled = '#AAA';
       secondaryDisabled = '#4583a8';
       break;
+    case 'xblack':
+      primary = '#FFF';
+      secondary = '#000';
+      secondaryHover = '#080808';
+      secondaryActive = '#080808';
+      primaryDisabled = '#CCC';
+      secondaryDisabled = '#222';
+      break;
     default:
       break;
   }
