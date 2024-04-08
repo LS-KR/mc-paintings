@@ -22,7 +22,7 @@ import CookiesBar from '../CookiesBar';
 import Tracker from '../Tracker';
 import ReactGA from '../../analytics';
 
-const PRIVACY_PATH = '/privacy';
+const PRIVACY_R = RegExp('/privacy/?');
 
 const Column = ({ children }) => (
   <div className="column">
@@ -59,7 +59,7 @@ const Layout = ({ captureHeader, children }) => {
       {showCookieBar || <Tracker />}
       <Header capture={captureHeader} />
       <div className="main">{children}</div>
-      {showCookieBar && window.location.pathname !== PRIVACY_PATH && (
+      {showCookieBar && window.location.pathname.search(PRIVACY_R) === -1 && (
         <>
           <div className="pushDown" />
           <CookiesBar onAccept={onCookiesAccept} />
