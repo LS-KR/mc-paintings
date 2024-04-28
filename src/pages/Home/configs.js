@@ -66,7 +66,7 @@ const _v = (f, c) => ({
  *   - Are you actually adding a new version? Remember to update defaultMeta.js. (Also, fix whatever has
  *     broken!) You'll also need to come up with a smarter solution than MAX_PACK_FORMAT.
  */
-const MAX_PACK_FORMAT = 22;
+const MAX_PACK_FORMAT = 32;
 const VERSION_MAP = {
   '1_20_2': _v(18, 1),
   '1_20': _v(15, 1),
