@@ -31,7 +31,7 @@ function About(props) {
         <div className="content">
           <h1>Minecraft 1.21</h1>
 
-          <p className="date">May 14, 2024</p>
+          <p className="date">14 May, 2024</p>
 
           <p>Greetings, MC-painter.</p>
 
