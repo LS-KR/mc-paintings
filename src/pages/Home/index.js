@@ -49,6 +49,7 @@ import AddImage from './icons/add_image.svg';
 import ChangeImage from './icons/change_image.svg';
 import CropIcon from './icons/crop.svg';
 import DownloadIcon from './icons/download.svg';
+import CapturedLink from '../../components/CapturedLink';
 
 const ImagePlaceHolder = ({ needsImage }) => (
   <div className="placeholder">
@@ -434,9 +435,8 @@ const Home = () => {
 
   /// Rendering and stuff
   const renderMobile = () => {
-    const disableCrop = !uploadedImages[currentSizeMob][
-      lastImageIdsMob[currentSizeMob]
-    ];
+    const disableCrop =
+      !uploadedImages[currentSizeMob][lastImageIdsMob[currentSizeMob]];
     return (
       <>
         <div className="spacer"></div>
@@ -634,6 +634,13 @@ const Home = () => {
               Current size: {selectedSize.size}
             </h2>
           )}
+
+          <div className="message">
+            Read:{' '}
+            <CapturedLink to="/update" capture={navCapture}>
+              A message about Minecraft 1.21 and mcpaintings.com
+            </CapturedLink>
+          </div>
         </Column>
         <style jsx>{`
           .imageSizeContainer {
@@ -653,6 +660,12 @@ const Home = () => {
             text-align: center;
             width: 100%;
             margin: 1rem 0;
+          }
+
+          .message {
+            width: 100%,
+            text-align: center;
+            margin: 2rem 0;
           }
 
           :global(.imageSizeContainer > *) {

@@ -24,6 +24,7 @@ import NotFound from './pages/NotFound';
 import About from './pages/About';
 import Guide from './pages/Guide';
 import Contact from './pages/Contact';
+import Update from './pages/Update';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <About path="/about" />
         <Guide path="/guide" />
         <Contact path="/contact" />
+        <Update path="/update" />
         <NotFound default />
       </Router>
     </div>
