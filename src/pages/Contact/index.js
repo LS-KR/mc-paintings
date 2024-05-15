@@ -52,9 +52,6 @@ function About(props) {
               Open an issue on GitHub
             </Button>
             <br />
-            <div className="space"></div>
-            (You can also{' '}
-            <Link external={TWEET_AT}>message us via X/Twitter</Link>.)
           </div>
           <br />
         </div>
@@ -87,10 +84,6 @@ function About(props) {
 
         .buttons {
           text-align: center;
-        }
-
-        .space {
-          margin-top: 2rem;
         }
       `}</style>
     </Layout>

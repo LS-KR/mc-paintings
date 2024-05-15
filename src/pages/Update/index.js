@@ -21,7 +21,7 @@
 
 import React from 'react';
 import Layout, { Column } from '../../components/Layout';
-import { KOFI, FEEDBACK, TWITTER } from '../../supportLinks.json';
+import { KOFI, FEEDBACK, BLUESKY } from '../../supportLinks.json';
 import Button from '../../components/Button';
 
 function About(props) {
@@ -89,7 +89,7 @@ function About(props) {
 
           <p>
             Thanks for using mcpaintings!{' '}
-            <a href={TWITTER} target="_blank">
+            <a href={BLUESKY} target="_blank">
               Stay tuned.
             </a>
           </p>
