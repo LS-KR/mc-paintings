@@ -21,11 +21,11 @@ import fileBuilders from './fileBuilders';
 const DEFAULT_PACK_META = {
   name: 'MC Paintings Pack',
   description: 'Generated at mcpaintings.com',
-  packFormat: 18,
+  packFormat: 48,
   resolution: 256,
   extension: 'zip',
-  fileBuilder: fileBuilders.java,
-  versionTag: '1_20_2',
+  fileBuilder: fileBuilders.java_1_21,
+  versionTag: '1_21',
 };
 
 export default DEFAULT_PACK_META;

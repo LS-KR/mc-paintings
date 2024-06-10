@@ -38,7 +38,7 @@ import Carousel from '../../components/Carousel';
 import ReactGA from '../../analytics';
 import fileBuilders from './fileBuilders';
 
-import { SIZES, VERSION_MAP } from './configs';
+import { SIZES_1_14, SIZES_1_21, VERSION_MAP } from './configs';
 import DEFAULT_PACK_META from './defaultMeta';
 import { navigate } from '@reach/router';
 
@@ -53,7 +53,7 @@ import CapturedLink from '../../components/CapturedLink';
 
 const ImagePlaceHolder = ({ needsImage }) => (
   <div className="placeholder">
-    {needsImage ? 'Upload an image' : 'Choose a size to begin'}
+    {/* {needsImage ? 'Upload an image' : 'Choose a size to begin'} */}
     <style jsx>{`
       .placeholder {
         width: 100%;
@@ -78,10 +78,10 @@ function sizeToAspect(size) {
 /*
  *  Generate an initial object for any of the configuration maps.
  */
-function generateInitial() {
+function generateInitial(sizes) {
   let initial = {};
-  Object.keys(SIZES).forEach((size) => {
-    initial[size] = Array(SIZES[size]).fill(undefined);
+  Object.keys(sizes).forEach((size) => {
+    initial[size] = Array(sizes[size]).fill(undefined);
   });
   return initial;
 }
@@ -92,15 +92,23 @@ const Home = () => {
   // the current opened menu (size string), falsy if none open
   const [openedMenu, setOpenedMenu] = useState();
 
+  // new version of mc or not
+  const [usingVersion, setUsingVersion] = useState(null);
+  const [sizesList, setSizesList] = useState(SIZES_1_21);
+
   /*
    *  These all hold info about the current set of images being manipulated.
    *    textureImages: the cropped images that will be used as painting textures
    *    uploadedImages: the uncropped uploaded images that can be manipulated
    *    cropConfigs: the initial crop settings to be used when returning to images
    */
-  const [textureImages, setTextureImages] = useState(generateInitial());
-  const [uploadedImages, setUploadedImages] = useState(generateInitial());
-  const [cropConfigs, setCropConfigs] = useState(generateInitial());
+  const [textureImages, setTextureImages] = useState(
+    generateInitial(SIZES_1_21)
+  );
+  const [uploadedImages, setUploadedImages] = useState(
+    generateInitial(SIZES_1_21)
+  );
+  const [cropConfigs, setCropConfigs] = useState(generateInitial(SIZES_1_21));
 
   /*
    *  The warning object. Falsy displays no warning. Should be formatted as:
@@ -136,7 +144,7 @@ const Home = () => {
   const [currentSizeMob, setCurrentSizeMob] = useState('1x1');
   const [lastImageIdsMob, setLastImageIdsMob] = useState(() => {
     let init = {};
-    Object.keys(SIZES).forEach((size) => {
+    Object.keys(SIZES_1_21).forEach((size) => {
       init[size] = 0;
     });
     return init;
@@ -144,6 +152,34 @@ const Home = () => {
   const [cropOpenMob, setCropOpenMob] = useState(false);
 
   const media = useMedia(mediaQuery);
+
+  // once version selected
+  useEffect(() => {
+    let sizes;
+    if (usingVersion === null) {
+      sizes = SIZES_1_21;
+    } else {
+      sizes = usingVersion === '1_21' ? SIZES_1_21 : SIZES_1_14;
+    }
+
+    setSizesList(sizes);
+
+    setTextureImages(generateInitial(sizes));
+    setUploadedImages(generateInitial(sizes));
+    setCropConfigs(generateInitial(sizes));
+
+    console.log('Initializing');
+    console.log(sizes);
+    console.log(generateInitial(sizes));
+
+    setLastImageIdsMob(() => {
+      let init = {};
+      Object.keys(sizes).forEach((size) => {
+        init[size] = 0;
+      });
+      return init;
+    });
+  }, [usingVersion]);
 
   const onCropChange = (event) => {
     if (!selectedSize) return;
@@ -159,6 +195,9 @@ const Home = () => {
     let newTextureImages = { ...textureImages };
     newTextureImages[selectedSize.size][selectedSize.index] =
       event.croppedImage;
+
+    console.log(event);
+
     setTextureImages(newTextureImages);
   };
 
@@ -376,9 +415,10 @@ const Home = () => {
 
           newPackMeta.packFormat = versionInfo.packFormat;
 
+          // for explanation of .class, see configs.js
           switch (versionInfo.class) {
             case 1:
-              newPackMeta.fileBuilder = fileBuilders.java;
+              newPackMeta.fileBuilder = fileBuilders.java_1_14;
               newPackMeta.extension = 'zip';
               break;
             case 2:
@@ -390,6 +430,15 @@ const Home = () => {
               newPackMeta.fileBuilder = fileBuilders.java_old;
               newPackMeta.extension = 'zip';
               showResolution = true;
+              break;
+            case 4:
+              newPackMeta.fileBuilder = fileBuilders.java_1_21;
+              newPackMeta.extension = 'zip';
+              break;
+            case 5:
+              // TODO
+              // newPackMeta.fileBuilder = fileBuilders.bedrock;
+              // newPackMeta.extension = 'zip';
               break;
             default:
               break;
@@ -410,7 +459,7 @@ const Home = () => {
   };
 
   const mobileOnSizeChange = (i) => {
-    let size = Object.keys(SIZES)[i];
+    let size = Object.keys(sizesList)[i];
     setCurrentSizeMob(size);
     onImageSelect(size, lastImageIdsMob[size]);
   };
@@ -433,15 +482,51 @@ const Home = () => {
     // eslint-disable-next-line
   }, [media.mobile]);
 
+  const renderVersionChoice = () => {
+    return (
+      <div className="container">
+        <div>I'm using...</div>
+        <div className="space" />
+        <Button scheme="green" onClick={() => setUsingVersion('1_21')}>
+          1.21+ (Tricky Trials)
+        </Button>
+        <div className="space" />
+        <Button onClick={() => setUsingVersion('old')}>An older version</Button>
+        <style jsx>{`
+          .container {
+            padding: 2rem 0;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+          }
+
+          .container div {
+            font-size: 1.1rem;
+            font-weight: bold;
+          }
+
+          .space {
+            height: 2rem;
+          }
+        `}</style>
+      </div>
+    );
+  };
+
   /// Rendering and stuff
   const renderMobile = () => {
+    if (usingVersion === null) {
+      return renderVersionChoice();
+    }
+
     const disableCrop =
       !uploadedImages[currentSizeMob][lastImageIdsMob[currentSizeMob]];
+
     return (
       <>
         <div className="spacer"></div>
         <Carousel height="5vh" onChange={mobileOnSizeChange}>
-          {Object.keys(SIZES).map((size) => {
+          {Object.keys(sizesList).map((size) => {
             return (
               <div className="sizeText" key={size}>
                 {size}
@@ -450,13 +535,13 @@ const Home = () => {
           })}
         </Carousel>
         <div className="spacer"></div>
-        {Object.keys(SIZES).map((size) => (
+        {Object.keys(sizesList).map((size) => (
           <div key={size} className={size === currentSizeMob ? 'show' : 'hide'}>
             <Carousel
               height="30vh"
               onChange={(i) => mobileOnImageChange(size, i)}
             >
-              {new Array(SIZES[size]).fill(0).map((_, i) => {
+              {new Array(sizesList[size]).fill(0).map((_, i) => {
                 return (
                   <ImageSelectMobile
                     image={textureImages[size][i]}
@@ -581,9 +666,9 @@ const Home = () => {
 
   // Render for desktop users
   const renderNormal = () => {
-    return (
-      <>
-        <Column>
+    const renderSizeSelect = () => {
+      return (
+        <>
           <div className="buttonsContainer">
             <UploadInput onUpload={onImageUpload} disabled={!selectedSize}>
               {selectedSize &&
@@ -597,7 +682,7 @@ const Home = () => {
             <div className="chooseSize">Choose a size to begin:</div>
           )}
           <div className="imageSizeContainer">
-            {Object.keys(SIZES).map((size) => (
+            {Object.keys(sizesList).map((size) => (
               <ImageSize
                 size={size}
                 isExpanded={size === openedMenu}
@@ -613,6 +698,14 @@ const Home = () => {
               />
             ))}
           </div>
+        </>
+      );
+    };
+
+    return (
+      <>
+        <Column>
+          {usingVersion === null ? renderVersionChoice() : renderSizeSelect()}
         </Column>
         <Column>
           {isCropping() ? (
@@ -691,6 +784,7 @@ const Home = () => {
           onClose={() => setShowDownloadView(false)}
           enableResolution={showResolutionSelect}
           processing={processingDownload}
+          usingVersion={usingVersion}
         />
       )}
       {showSupportView && (

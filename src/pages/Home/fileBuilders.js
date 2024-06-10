@@ -18,8 +18,11 @@
 
 import {
   MC_1_14_NAMES,
+  MC_1_21_NAMES,
+  BR_1_21_NAMES,
   SINGLE_TEX_POSITIONS,
   MAX_PACK_FORMAT,
+  MAX_PACK_FORMAT_PRE_1_21,
 } from './configs';
 import { v4 as uuid } from 'uuid';
 import defaultBedrockImage from './template_br.png';
@@ -44,16 +47,27 @@ function createNewImage(imageString) {
  *      desc: String,
  *    }
  */
-async function java(root, textureImages, meta) {
+async function java_1_14(root, textureImages, meta) {
+  return java_new_generic(root, textureImages, meta, MC_1_14_NAMES);
+}
+
+async function java_1_21(root, textureImages, meta) {
+  return java_new_generic(root, textureImages, meta, MC_1_21_NAMES);
+}
+
+async function java_new_generic(root, textureImages, meta, names) {
   let min_format = meta.format;
   let max_format = meta.format;
 
   // Version 5 = 1.15, the first version to use multiple painting files.
   // (Well, actually, this was 1.14, but versioning was fucked - see configs.js.)
-  // As of 1.20.4, there have been literally no changes to paintings since 1.15.
-  // So, we can safely use any version in the range 1.15 - 1.20.4.
-  if (meta.format >= 5) {
+  // There were no changes to paintings in 1.15 - 1.20.6, but new paintings were
+  // added in 1.21.
+  if (meta.format >= 5 && meta.format <= MAX_PACK_FORMAT_PRE_1_21) {
     min_format = 5;
+    max_format = MAX_PACK_FORMAT_PRE_1_21;
+  } else if (meta.format > MAX_PACK_FORMAT_PRE_1_21) {
+    min_format = MAX_PACK_FORMAT_PRE_1_21 + 1; // hack, but it works
     max_format = MAX_PACK_FORMAT;
   }
 
@@ -95,7 +109,7 @@ async function java(root, textureImages, meta) {
       let imageString = canvas
         .toDataURL()
         .replace('data:image/png;base64,', '');
-      paintings.file(`${MC_1_14_NAMES[size][i]}.png`, imageString, {
+      paintings.file(`${names[size][i]}.png`, imageString, {
         base64: true,
       });
       userPaintingsCount += 1;
@@ -235,7 +249,8 @@ async function java_old(root, textureImages, meta) {
 }
 
 export default {
-  java,
+  java_1_14,
+  java_1_21,
   java_old,
   bedrock,
 };

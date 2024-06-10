@@ -19,7 +19,7 @@
 /**
  * Number of paintings for each size.
  */
-const SIZES = {
+const SIZES_1_14 = {
   '1x1': 7,
   '1x2': 2,
   '2x1': 5,
@@ -27,6 +27,18 @@ const SIZES = {
   '4x2': 1,
   '4x3': 2,
   '4x4': 3,
+};
+
+const SIZES_1_21 = {
+  '1x1': 8,
+  '1x2': 3,
+  '2x1': 5,
+  '2x2': 8,
+  '3x3': 8,
+  '3x4': 2,
+  '4x2': 5,
+  '4x3': 2,
+  '4x4': 5,
 };
 
 /**
@@ -42,6 +54,64 @@ const MC_1_14_NAMES = {
   '4x4': ['burning_skull', 'pigscene', 'pointer'],
 };
 
+const MC_1_21_NAMES = {
+  '1x1': [
+    'alban',
+    'aztec',
+    'aztec2',
+    'bomb',
+    'kebab',
+    'meditative',
+    'plant',
+    'wasteland',
+  ],
+  '1x2': ['graham', 'prairie_ride', 'wanderer'],
+  '2x1': ['courbet', 'creebet', 'pool', 'sea', 'sunset'],
+  '2x2': [
+    'baroque',
+    'bust',
+    'humble',
+    'match',
+    'skull_and_roses',
+    'stage',
+    'void',
+    'wither',
+  ],
+  '3x3': [
+    'bouquet',
+    'cavebird',
+    'cotan',
+    'endboss',
+    'fern',
+    'owlemons',
+    'sunflowers',
+    'tides',
+  ],
+  '3x4': ['backyard', 'pond'],
+  '4x2': ['changing', 'fighters', 'finding', 'lowmist', 'passage'],
+  '4x3': ['donkey_kong', 'skeleton'],
+  '4x4': ['burning_skull', 'orb', 'pigscene', 'pointer', 'unpacked'],
+};
+
+const BR_1_21_NAMES = {
+  '1x1': ['meditative'],
+  '1x2': ['prairie_ride', 'wanderer'],
+  '2x2': ['baroque', 'humble'],
+  '3x3': [
+    'bouquet',
+    'cavebird',
+    'cotan',
+    'endboss',
+    'fern',
+    'owlemons',
+    'sunflowers',
+    'tides',
+  ],
+  '3x4': ['backyard', 'pond'],
+  '4x2': ['fighters'],
+  '4x4': ['orb', 'unpacked'],
+};
+
 /**
  * Helper function to construct version information object.
  *
@@ -50,6 +120,8 @@ const MC_1_14_NAMES = {
  *   - 1 for new Java format (separate file for each painting)
  *   - 2 for current Bedrock format (single texture for all paintings)
  *   - 3 for old Java format (single texture for all paintings)
+ *   - 4 for 1.21 Java format (new paintings)
+ *   - 5 for 1.21 Bedrock format (new paintings, but still using kz for some)
  */
 const _v = (f, c) => ({
   packFormat: f,
@@ -65,9 +137,12 @@ const _v = (f, c) => ({
  *     updating the MAX_PACK_FORMAT variable to the latest number at https://minecraft.wiki/w/Pack_format.
  *   - Are you actually adding a new version? Remember to update defaultMeta.js. (Also, fix whatever has
  *     broken!) You'll also need to come up with a smarter solution than MAX_PACK_FORMAT.
+ *     - note to self: the 'smarter solution' is apparently having two MAX_PACK_FORMATs.
  */
-const MAX_PACK_FORMAT = 32;
+const MAX_PACK_FORMAT = 48;
+const MAX_PACK_FORMAT_PRE_1_21 = 41;
 const VERSION_MAP = {
+  '1_21': _v(48, 4),
   '1_20_2': _v(18, 1),
   '1_20': _v(15, 1),
   '1_19_4': _v(13, 1),
@@ -82,6 +157,7 @@ const VERSION_MAP = {
   '1_11': _v(3, 3),
   '1_9': _v(2, 3),
   '1_6': _v(1, 3),
+  BR_1_21: _v([1, 21, 0], 5),
   BR_1_14: _v([1, 14, 0], 2),
 };
 
@@ -122,9 +198,13 @@ const SINGLE_TEX_POSITIONS = {
 };
 
 export {
-  SIZES,
+  SIZES_1_21,
+  SIZES_1_14,
   MC_1_14_NAMES,
+  MC_1_21_NAMES,
+  BR_1_21_NAMES,
   SINGLE_TEX_POSITIONS,
   VERSION_MAP,
   MAX_PACK_FORMAT,
+  MAX_PACK_FORMAT_PRE_1_21,
 };

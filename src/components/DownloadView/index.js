@@ -27,8 +27,14 @@ import { useMedia } from 'react-media';
 
 import { c_ACTION, c_PRIMARY, c_ACTIVE, c_INACTIVE } from '../../theme';
 
+const selectOptionsNew = [
+  { value: '1_21', label: 'Java 1.21+' },
+  { value: 'BR_1_21', label: 'Bedrock 1.21+', isDisabled: true },
+  // { value: '', label: 'More versions coming soon!', isDisabled: true },
+];
+
 const selectOptions = [
-  { value: '1_20_2', label: 'Java 1.20.2+' },
+  { value: '1_20_2', label: 'Java 1.20.2 - 1.20.6' },
   { value: '1_20', label: 'Java 1.20 - 1.20.1' },
   { value: '1_19_4', label: 'Java 1.19.4' },
   { value: '1_19_3', label: 'Java 1.19.3' },
@@ -42,7 +48,7 @@ const selectOptions = [
   { value: '1_11', label: 'Java 1.11 - 1.12.2' },
   { value: '1_9', label: 'Java 1.9 - 1.10.2' },
   { value: '1_6', label: 'Java 1.6.1 - 1.8.9' },
-  { value: 'BR_1_14', label: 'Bedrock 1.14+' },
+  { value: 'BR_1_14', label: 'Bedrock 1.14 - 1.20' },
   // { value: '', label: 'More versions coming soon!', isDisabled: true },
 ];
 
@@ -94,16 +100,18 @@ export default ({
   onClose,
   processing,
   enableResolution,
+  usingVersion,
 }) => {
   const media = useMedia(mediaQuery);
   const def = media.mobile ? DEFAULT_MOBILE : DEFAULT_DESKTOP;
+  const selectOpts = usingVersion === '1_21' ? selectOptionsNew : selectOptions;
 
   // Set version field in meta object since we change the default based on whether
   // user is mobile or desktop
   useEffect(() => {
     handleInput(
       {
-        value: selectOptions[def].value,
+        value: selectOpts[def].value,
       },
       'version'
     );
@@ -140,9 +148,9 @@ export default ({
           </div>
           <div>
             <Select
-              options={selectOptions}
+              options={selectOpts}
               styles={styles}
-              defaultValue={selectOptions[def]}
+              defaultValue={selectOpts[def]}
               isSearchable={false}
               onChange={(e) => handleInput(e, 'version')}
             />
