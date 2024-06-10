@@ -636,6 +636,12 @@ const Home = () => {
           )}
 
           <div className="message">
+            <b>NEW:</b>{' '}
+            <a href="https://beta.mcpaintings.com/" target="_blank">
+              try the beta version
+            </a>{' '}
+            with experimental support for the 1.21 update!
+            <div className="space"></div>
             Read:{' '}
             <CapturedLink to="/update" capture={navCapture}>
               A message about Minecraft 1.21 and mcpaintings.com
@@ -666,6 +672,10 @@ const Home = () => {
             width: 100%,
             text-align: center;
             margin: 2rem 0;
+          }
+
+          .space {
+            height: 2rem;
           }
 
           :global(.imageSizeContainer > *) {
