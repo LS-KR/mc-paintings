@@ -50,6 +50,7 @@ import ChangeImage from './icons/change_image.svg';
 import CropIcon from './icons/crop.svg';
 import DownloadIcon from './icons/download.svg';
 import CapturedLink from '../../components/CapturedLink';
+import { FEEDBACK } from '../../supportLinks.json';
 
 const ImagePlaceHolder = ({ needsImage }) => (
   <div className="placeholder">
@@ -723,11 +724,19 @@ const Home = () => {
           )}
 
           <div className="message">
-            <b>You are using the BETA version of MCPaintings.com.</b>
-            <br />
-            <a href="https://www.mcpaintings.com/">
-              Return to the stable version of mcpaintings.com.
-            </a>
+            <p>
+              <b>You are using the BETA version of MCPaintings.com.</b>
+            </p>
+            <p>
+              <a href="https://www.mcpaintings.com/">
+                Return to the stable version of mcpaintings.com
+              </a>
+            </p>
+            <p>
+              <a href={FEEDBACK} target="_blank">
+                Leave some feedback
+              </a>
+            </p>
           </div>
         </Column>
         <style jsx>{`
@@ -751,7 +760,7 @@ const Home = () => {
           }
 
           .message {
-            width: 100%,
+            width: 100%;
             text-align: center;
             margin: 2rem 0;
           }
