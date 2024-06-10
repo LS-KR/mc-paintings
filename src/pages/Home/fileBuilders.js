@@ -175,7 +175,97 @@ async function generalizedSingleTexture(meta, baseImage, textureImages) {
  *      packFormat: [Number, Number, Number]
  *    }
  */
-async function bedrock(root, textureImages, meta) {
+async function bedrock_1_21(root, textureImages, meta) {
+  root.file(
+    'manifest.json',
+    JSON.stringify({
+      format_version: 2,
+      header: {
+        description: meta.desc,
+        name: `${meta.name}`,
+        uuid: uuid(),
+        version: [0, 0, 1],
+        min_engine_version: meta.format,
+      },
+      modules: [
+        {
+          description: meta.desc,
+          type: 'resources',
+          uuid: uuid(), // yes this is supposed to be different from the one above
+          version: [0, 0, 1],
+        },
+      ],
+    })
+  );
+
+  // work out which to send to single texture
+  const kzTextures = {};
+  const otherTextures = {};
+  for (let size in textureImages) {
+    if (SINGLE_TEX_POSITIONS[size] === undefined) {
+      otherTextures[size] = textureImages[size];
+      continue;
+    }
+
+    const availableInKz = SINGLE_TEX_POSITIONS[size].positions.length;
+    console.log(size, availableInKz);
+    if (textureImages[size].length > availableInKz) {
+      kzTextures[size] = textureImages[size].slice(0, availableInKz);
+      otherTextures[size] = textureImages[size].slice(availableInKz);
+    } else {
+      kzTextures[size] = textureImages[size];
+    }
+  }
+
+  console.log(textureImages);
+  console.log(kzTextures);
+  console.log(otherTextures);
+
+  // now do the single (kz) texture
+  const paintingDir = root.folder('textures/painting');
+  const baseImage = await createNewImage(defaultBedrockImage);
+  let [imageString, userPaintingsCount] = await generalizedSingleTexture(
+    meta,
+    baseImage,
+    kzTextures
+  );
+
+  paintingDir.file('kz.png', imageString, {
+    base64: true,
+  });
+
+  // and do the other textures (copied from above, no shame)
+  for (let size in otherTextures) {
+    let thisSize = otherTextures[size];
+    for (let i = 0; i < thisSize.length; i++) {
+      // At this point the image is in jpeg format so convert
+      // it to a png via a canvas.
+      // SINCE 1.20.3, ONLY PNGs WORK!!!
+      let jpegImage = thisSize[i];
+      if (!jpegImage) continue;
+
+      let imageObj = await createNewImage(jpegImage);
+
+      let canvas = document.createElement('canvas');
+      canvas.width = imageObj.naturalWidth;
+      canvas.height = imageObj.naturalHeight;
+      let context = canvas.getContext('2d');
+      context.drawImage(imageObj, 0, 0);
+
+      let imageString = canvas
+        .toDataURL()
+        .replace('data:image/png;base64,', '');
+      paintingDir.file(`${BR_1_21_NAMES[size][i]}.png`, imageString, {
+        base64: true,
+      });
+      userPaintingsCount += 1;
+    }
+  }
+
+  return userPaintingsCount;
+}
+
+async function bedrock_1_14(root, textureImages, meta) {
   root.file(
     'manifest.json',
     JSON.stringify({
@@ -252,5 +342,6 @@ export default {
   java_1_14,
   java_1_21,
   java_old,
-  bedrock,
+  bedrock_1_14,
+  bedrock_1_21,
 };

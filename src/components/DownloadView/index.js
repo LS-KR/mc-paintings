@@ -29,7 +29,7 @@ import { c_ACTION, c_PRIMARY, c_ACTIVE, c_INACTIVE } from '../../theme';
 
 const selectOptionsNew = [
   { value: '1_21', label: 'Java 1.21+' },
-  { value: 'BR_1_21', label: 'Bedrock 1.21+', isDisabled: true },
+  { value: 'BR_1_21', label: 'Bedrock 1.21+' },
   // { value: '', label: 'More versions coming soon!', isDisabled: true },
 ];
 
@@ -51,10 +51,6 @@ const selectOptions = [
   { value: 'BR_1_14', label: 'Bedrock 1.14 - 1.20' },
   // { value: '', label: 'More versions coming soon!', isDisabled: true },
 ];
-
-// Default versions selected for different
-const DEFAULT_DESKTOP = 0;
-const DEFAULT_MOBILE = selectOptions.length - 1;
 
 const resolutionOptions = [
   { value: 16, label: 'Native (16x)' },
@@ -103,7 +99,14 @@ export default ({
   usingVersion,
 }) => {
   const media = useMedia(mediaQuery);
-  const def = media.mobile ? DEFAULT_MOBILE : DEFAULT_DESKTOP;
+  const def =
+    usingVersion === '1_21'
+      ? media.mobile
+        ? selectOptionsNew.length - 1
+        : 0
+      : media.mobile
+      ? selectOptions.length - 1
+      : 0;
   const selectOpts = usingVersion === '1_21' ? selectOptionsNew : selectOptions;
 
   // Set version field in meta object since we change the default based on whether

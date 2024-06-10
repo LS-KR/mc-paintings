@@ -168,10 +168,6 @@ const Home = () => {
     setUploadedImages(generateInitial(sizes));
     setCropConfigs(generateInitial(sizes));
 
-    console.log('Initializing');
-    console.log(sizes);
-    console.log(generateInitial(sizes));
-
     setLastImageIdsMob(() => {
       let init = {};
       Object.keys(sizes).forEach((size) => {
@@ -195,8 +191,6 @@ const Home = () => {
     let newTextureImages = { ...textureImages };
     newTextureImages[selectedSize.size][selectedSize.index] =
       event.croppedImage;
-
-    console.log(event);
 
     setTextureImages(newTextureImages);
   };
@@ -422,7 +416,7 @@ const Home = () => {
               newPackMeta.extension = 'zip';
               break;
             case 2:
-              newPackMeta.fileBuilder = fileBuilders.bedrock;
+              newPackMeta.fileBuilder = fileBuilders.bedrock_1_14;
               newPackMeta.extension = 'mcpack';
               showResolution = true;
               break;
@@ -436,9 +430,9 @@ const Home = () => {
               newPackMeta.extension = 'zip';
               break;
             case 5:
-              // TODO
-              // newPackMeta.fileBuilder = fileBuilders.bedrock;
-              // newPackMeta.extension = 'zip';
+              newPackMeta.fileBuilder = fileBuilders.bedrock_1_21;
+              newPackMeta.extension = 'mcpack';
+              showResolution = true;
               break;
             default:
               break;

@@ -95,7 +95,7 @@ const MC_1_21_NAMES = {
 
 const BR_1_21_NAMES = {
   '1x1': ['meditative'],
-  '1x2': ['prairie_ride', 'wanderer'],
+  '1x2': ['prairie_ride'],
   '2x2': ['baroque', 'humble'],
   '3x3': [
     'bouquet',
@@ -108,7 +108,7 @@ const BR_1_21_NAMES = {
     'tides',
   ],
   '3x4': ['backyard', 'pond'],
-  '4x2': ['fighters'],
+  '4x2': ['changing', 'finding', 'lowmist', 'passage'],
   '4x4': ['orb', 'unpacked'],
 };
 
