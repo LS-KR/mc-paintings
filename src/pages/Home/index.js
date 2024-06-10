@@ -723,10 +723,11 @@ const Home = () => {
           )}
 
           <div className="message">
-            Read:{' '}
-            <CapturedLink to="/update" capture={navCapture}>
-              A message about Minecraft 1.21 and mcpaintings.com
-            </CapturedLink>
+            <b>You are using the BETA version of MCPaintings.com.</b>
+            <br />
+            <a href="https://www.mcpaintings.com/">
+              Return to the stable version of mcpaintings.com.
+            </a>
           </div>
         </Column>
         <style jsx>{`
