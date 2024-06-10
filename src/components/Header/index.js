@@ -87,7 +87,9 @@ export default ({ capture }) => {
     <>
       <div className="header">
         <Link to="/">
-          <h1 className="text">Minecraft Painting Creator</h1>
+          <h1 className="text">
+            Minecraft Painting Creator <span className="emph">BETA</span>
+          </h1>
         </Link>
         {media.mobile ? (
           <div className="menuIcon" onClick={() => setShowDropdown(true)}>
@@ -102,7 +104,13 @@ export default ({ capture }) => {
         {showDropdown && <div className="menuClose" onClick={closeMenu} />}
         <style jsx>{`
           .header {
-            background-color: ${c_HEADER};
+            background: repeating-linear-gradient(
+              45deg,
+              #9b5d02,
+              #9b5d02 10px,
+              black 10px,
+              black 20px
+            );
             width: 100%;
             padding: 0.3rem 2rem;
             box-sizing: border-box;
@@ -111,9 +119,14 @@ export default ({ capture }) => {
             align-items: center;
           }
 
+          .emph {
+            color: yellow;
+          }
+
           .text {
             font-size: 1.5rem;
             color: ${c_PRIMARY};
+            text-shadow: 2px 2px black;
           }
 
           .menuIcon {
