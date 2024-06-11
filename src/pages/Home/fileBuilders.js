@@ -208,7 +208,6 @@ async function bedrock_1_21(root, textureImages, meta) {
     }
 
     const availableInKz = SINGLE_TEX_POSITIONS[size].positions.length;
-    console.log(size, availableInKz);
     if (textureImages[size].length > availableInKz) {
       kzTextures[size] = textureImages[size].slice(0, availableInKz);
       otherTextures[size] = textureImages[size].slice(availableInKz);
@@ -216,10 +215,6 @@ async function bedrock_1_21(root, textureImages, meta) {
       kzTextures[size] = textureImages[size];
     }
   }
-
-  console.log(textureImages);
-  console.log(kzTextures);
-  console.log(otherTextures);
 
   // now do the single (kz) texture
   const paintingDir = root.folder('textures/painting');
