@@ -18,10 +18,11 @@
 
 import fileBuilders from './fileBuilders';
 
+// This must match the default settings in DownloadView
 const DEFAULT_PACK_META = {
   name: 'MC Paintings Pack',
   description: 'Generated at mcpaintings.com',
-  packFormat: 48,
+  packFormat: 34,
   resolution: 256,
   extension: 'zip',
   fileBuilder: fileBuilders.java_1_21,
