@@ -725,14 +725,7 @@ const Home = () => {
 
           <div className="message">
             <p>
-              <b>You are using the BETA version of MCPaintings.com.</b>
-            </p>
-            <p>
-              <a href="https://www.mcpaintings.com/">
-                Return to the stable version of mcpaintings.com
-              </a>
-            </p>
-            <p>
+              Found a problem? Want to say hi?
               <a href={FEEDBACK} target="_blank">
                 Leave some feedback
               </a>
