@@ -724,11 +724,13 @@ const Home = () => {
           )}
 
           <div className="message">
+            <p>We have updated to support 1.21!</p>
             <p>
-              Found a problem? Want to say hi?
+              Found a problem?{' '}
               <a href={FEEDBACK} target="_blank">
                 Leave some feedback
               </a>
+              .
             </p>
           </div>
         </Column>
