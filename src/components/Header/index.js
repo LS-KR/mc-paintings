@@ -102,7 +102,7 @@ export default ({ capture }) => {
         {showDropdown && <div className="menuClose" onClick={closeMenu} />}
         <style jsx>{`
           .header {
-            background-color: ${c_HEADER};
+            background: ${c_HEADER};
             width: 100%;
             padding: 0.3rem 2rem;
             box-sizing: border-box;
@@ -114,6 +114,7 @@ export default ({ capture }) => {
           .text {
             font-size: 1.5rem;
             color: ${c_PRIMARY};
+            text-shadow: 2px 2px black;
           }
 
           .menuIcon {

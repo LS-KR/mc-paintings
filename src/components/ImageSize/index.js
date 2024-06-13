@@ -126,7 +126,7 @@ const ImageSize = ({
 
         .expandedMenu {
           display: ${isExpanded ? 'block' : 'none'};
-          width: ${BASE_SIZE * 5}rem;
+          width: ${BASE_SIZE * 10}rem;
           border: 1px solid ${c_PRIMARY};
           background: ${c_ACTIVE};
           position: absolute;
